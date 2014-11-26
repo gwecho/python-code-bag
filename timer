@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+
+import time
+
+class TimerExcecution(object):
+    '''
+    上下文管理器实现时间记录器
+    '''
+    def __init__(self, message):
+        self._message = message
+
+    def __enter__(self):
+        self._start_time = time.time()
+        return self
+
+    def __exit__(self, exc_type=None, exc_value=None, traceback=None):
+        self._end_time = time.time()
+        self._log()
+
+    def _log(self):
+        print ("[%s]: start from %s, end at %s, time consuming: %s" % 
+            (self._message, self._start_time, self._end_time, 
+                self._end_time - self._start_time))
+
+with TimerExcecution("test timer") as _:
+    time.sleep(1)
+  
+    
